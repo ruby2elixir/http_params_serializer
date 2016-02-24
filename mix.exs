@@ -1,9 +1,11 @@
 defmodule HttpParamsSerializer.Mixfile do
   use Mix.Project
 
+  @version "0.1.0"
+
   def project do
     [app: :http_params_serializer,
-     version: "0.0.1",
+     version: @version,
      elixir: "~> 1.2",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
