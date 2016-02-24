@@ -3,21 +3,20 @@
 
 ## tl;dr
 
-Turns this datastructure
+Turns this `Map`
 
 ```elixir
-%{a:
-  %{b:
-    %{
-      d: [1,2],
-      f: 4
-    }
-  },
-  c: 3
-}
+%{ a: %{ b: %{ d: [1,2], f: 4 } }, c: 3 }
 ```
 
-into this
+or the equivalent `Keyword list`:
+
+```elixir
+[a: [b: [d: [1, 2], f: 4]], c: 3]
+```
+
+into a `list of key-value tuples`:
+
 ```elixir
 [
   {"a[b][d][]", 1},
@@ -40,6 +39,14 @@ for communication with backend APIs.
 I couldn't find an Elixir package that serializes HTTP params as `maps` or nested `keyword lists` into a list of key-value pairs that many REST APIs (in Rails or similar MVC frameworks) require. So I've build one. Enjoy!
 
 
+## Features
+
+  - serialization of arbirary deeply nested datastructures
+  - sorted keys for more predictable output
+  - the output (list with tuples) can be directly consumed by following Elixir/Erlang HTTP clients:
+    - [HTTPoison](https://github.com/edgurgel/httpoison)
+    - [Hackney](https://github.com/benoitc/hackney)
+
 ## Usage
 
 ```elixir
@@ -51,7 +58,7 @@ iex> params = %{id: "aaa-1234",
 %{account: %{last_name: "User Eva", name: "Best"},
   balance: %{balance: 1500, currency: "$", limit: 1000}, id: "aaa-1234"}
 iex> params |> HttpParamsSerializer.serialize
-[[{"account[last_name]", "User Eva"}, {"account[name]", "Best"},
+[{"account[last_name]", "User Eva"}, {"account[name]", "Best"},
  {"balance[balance]", 1500}, {"balance[currency]", "$"},
  {"balance[limit]", 1000}, {"id", "aaa-1234"}, {"roles[]", "staff"},
  {"roles[]", "manager"}, {"roles[]", "admin"}]
