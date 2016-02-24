@@ -43,7 +43,11 @@ I couldn't find an Elixir package that serializes HTTP params as `maps` or neste
 ## Usage
 
 ```elixir
-iex> params = %{id: "aaa-1234", account: %{name: "Best", last_name: "User Eva"}, balance: %{limit: 1000, currency: "$", balance: 1500}, roles: ["admin", "manager", "staff"]}
+iex> params = %{id: "aaa-1234",
+  account: %{name: "Best", last_name: "User Eva"},
+  balance: %{limit: 1000, currency: "$", balance: 1500},
+  roles: ["admin", "manager", "staff"]
+}
 %{account: %{last_name: "User Eva", name: "Best"},
   balance: %{balance: 1500, currency: "$", limit: 1000}, id: "aaa-1234"}
 iex> params |> HttpParamsSerializer.serialize
