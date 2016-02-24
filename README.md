@@ -38,6 +38,8 @@ for communication with backend APIs.
 
 I couldn't find an Elixir package that serializes HTTP params as `maps` or nested `keyword lists` into a list of key-value pairs that many REST APIs (in Rails or similar MVC frameworks) require. So I've build one. Enjoy!
 
+This is supposed to be the Elixir equivalent of [Jquery.param](http://api.jquery.com/jquery.param/) in JS world.
+
 
 ## Features
 
