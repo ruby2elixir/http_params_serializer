@@ -1,32 +1,32 @@
 defmodule HttpParamsSerializer do
-  def normalize(params) when is_map(params) do
-    params |> convert_map_to_list |> normalize
+  def serialize(params) when is_map(params) do
+    params |> convert_map_to_list |> serialize
   end
 
-  def normalize(params) when is_list(params) do
-    normalize("", params, [])
+  def serialize(params) when is_list(params) do
+    serialize("", params, [])
   end
 
-  def normalize(namespace, params = [{k, v}|t], acc) when is_list(v) do
+  def serialize(namespace, params = [{k, v}|t], acc) when is_list(v) do
     cond do
       Keyword.keyword?(v) ->
-        res = normalize(field_name(namespace, k), v, [])
-        normalize(namespace, t, res ++ acc  )
+        res = serialize(field_name(namespace, k), v, [])
+        serialize(namespace, t, res ++ acc  )
       true -> # we have a normal list, special fieldname required!
         res = Enum.map(v, fn(x)-> {field_name(:array, namespace, k), x} end)
-        normalize(namespace, t, res ++ acc )
+        serialize(namespace, t, res ++ acc )
     end
   end
 
-  def normalize(namespace, params = [{k, v}|t], acc) do
-    normalize(namespace, t, [ {field_name(namespace, k), v} | acc ])
+  def serialize(namespace, params = [{k, v}|t], acc) do
+    serialize(namespace, t, [ {field_name(namespace, k), v} | acc ])
   end
 
   # reverse + sorting only needed at the end of empty (== root) namespace
-  def normalize("", [], acc) do
+  def serialize("", [], acc) do
     acc |> Enum.reverse |> Enum.sort_by(fn({k,v})-> k end )
   end
-  def normalize(namespace, [], acc),  do: acc
+  def serialize(namespace, [], acc),  do: acc
 
   def field_name(namespace, field) do
     case namespace do

@@ -4,10 +4,10 @@ defmodule HttpParamsSerializerTest do
 
   describe ":HttpParamsSerializer" do
     def assert_output(i, o) do
-      assert HttpParamsSerializer.normalize(i) == o
+      assert HttpParamsSerializer.serialize(i) == o
     end
 
-    describe ":normalize" do
+    describe ":serialize" do
       it "accepts maps and converts them to keylists, so the result is same" do
         output = [{"a", 1}, {"b", 2}]
         assert_output %{a: 1, b: 2}, output
