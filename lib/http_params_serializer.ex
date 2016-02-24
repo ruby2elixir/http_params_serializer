@@ -7,7 +7,7 @@ defmodule HttpParamsSerializer do
     serialize("", params, [])
   end
 
-  def serialize(namespace, params = [{k, v}|t], acc) when is_list(v) do
+  defp serialize(namespace, [{k, v}|t], acc) when is_list(v) do
     cond do
       Keyword.keyword?(v) ->
         res = serialize(field_name(namespace, k), v, [])
@@ -18,24 +18,24 @@ defmodule HttpParamsSerializer do
     end
   end
 
-  def serialize(namespace, params = [{k, v}|t], acc) do
+  defp serialize(namespace, [{k, v}|t], acc) do
     serialize(namespace, t, [ {field_name(namespace, k), v} | acc ])
   end
 
   # reverse + sorting only needed at the end of empty (== root) namespace
-  def serialize("", [], acc) do
-    acc |> Enum.reverse |> Enum.sort_by(fn({k,v})-> k end )
+  defp serialize("", [], acc) do
+    acc |> Enum.reverse |> Enum.sort_by(fn({k,_v})-> k end )
   end
-  def serialize(namespace, [], acc),  do: acc
+  defp serialize(_namespace, [], acc),  do: acc
 
-  def field_name(namespace, field) do
+  defp field_name(namespace, field) do
     case namespace do
       "" -> "#{field}"
       _  -> "#{namespace}[#{field}]"
     end
   end
 
-  def field_name(:array, namespace, field) do
+  defp field_name(:array, namespace, field) do
     case namespace do
       "" -> "#{field}[]"
       _  -> "#{namespace}[#{field}][]"
