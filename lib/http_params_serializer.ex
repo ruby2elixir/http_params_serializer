@@ -1,8 +1,23 @@
 defmodule HttpParamsSerializer do
+  @moduledoc """
+  A small library to serialize deeply nested datastructures into HTTP parameters that most backends do understand.
+  """
+
+
   def serialize(params) when is_map(params) do
     params |> convert_map_to_list |> serialize
   end
 
+
+  @doc """
+  Example:
+      iex> [a: [b: [d: [1, 2], f: 4]], c: 3] |> HttpParamsSerializer.serialize
+      [{"a[b][d][]", 2}, {"a[b][d][]", 1}, {"a[b][f]", 4}, {"c", 3}]
+
+
+      iex> %{ a: %{ b: %{ d: [1,2], f: 4 } }, c: 3 } |> HttpParamsSerializer.serialize
+      [{"a[b][d][]", 2}, {"a[b][d][]", 1}, {"a[b][f]", 4}, {"c", 3}]
+  """
   def serialize(params) when is_list(params) do
     serialize("", params, [])
   end
@@ -42,6 +57,14 @@ defmodule HttpParamsSerializer do
     end
   end
 
+
+  @doc """
+  Little helper funciton to recursivelly convert a map into a nested keyword list.
+
+  Example:
+      iex> %{a: 1, b: %{c: %{d: 2}}} |> HttpParamsSerializer.convert_map_to_list
+      [a: 1, b: [c: [d: 2]]]
+  """
   def convert_map_to_list(map) when is_map(map) do
     map
       |> Map.to_list
