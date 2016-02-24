@@ -1,0 +1,2 @@
+defmodule HttpParamsSerializer do
+end
