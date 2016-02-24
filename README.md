@@ -74,6 +74,16 @@ HTTPoison.Base.request!(:post, "/some_endpoint", [], {:form, ready})
 ```
 
 
+
+## Gotchas
+
+When then input is a Map the order of keys for lists inside the map might be not the original order.
+This is because Erlang Maps do not support ordering of keys.
+```
+## http://elixir-lang.org/getting-started/keywords-and-maps.html#maps
+Maps’ keys do not follow any ordering.
+```
+
 ## Installation
   1. Add http_params_serializer to your list of dependencies in `mix.exs`:
 
