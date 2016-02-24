@@ -67,6 +67,11 @@ iex> params |> HttpParamsSerializer.serialize
  {"roles[]", "manager"}, {"roles[]", "admin"}]
 ```
 
+With HTTPoison:
+```elixir
+ready = params |> HttpParamsSerializer.serialize
+HTTPoison.Base.request!(:post, "/some_endpoint", [], {:form, ready})
+```
 
 
 ## Installation
