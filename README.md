@@ -44,7 +44,7 @@ This is supposed to be the Elixir equivalent of [Jquery.param](http://api.jquery
 
 ## Features
 
-  - serialization of arbirary deeply nested datastructures
+  - serialization of arbitrary deeply nested datastructures
   - sorted keys for more predictable output
   - the output (list with tuples) can be directly consumed by following Elixir/Erlang HTTP clients:
     - [HTTPoison](https://github.com/edgurgel/httpoison)
