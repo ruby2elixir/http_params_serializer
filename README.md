@@ -1,5 +1,6 @@
 # HttpParamsSerializer
 
+A small library to serialize deeply nested datastructures into HTTP parameters that most backends do understand
 
 ## tl;dr
 
