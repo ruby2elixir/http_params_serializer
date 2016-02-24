@@ -1,5 +1,12 @@
 # HttpParamsSerializer
 
+[![Build status](https://travis-ci.org/ruby2elixir/http_params_serializer.svg "Build status")](https://travis-ci.org/ruby2elixir/http_params_serializer)
+[![Hex version](https://img.shields.io/hexpm/v/http_params_serializer.svg "Hex version")](https://hex.pm/packages/http_params_serializer)
+![Hex downloads](https://img.shields.io/hexpm/dt/http_params_serializer.svg "Hex downloads")
+
+----
+
+
 A small library to serialize deeply nested datastructures into HTTP parameters that most backends do understand
 
 ## tl;dr
